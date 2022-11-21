@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int linearSearch(int *a, int &n, int &x) {
+    for(int i = 0; i < n; i++) {
+        if(a[i] == x)
+            return i;
+    }
+    return -1;
+}
+ 
+int binarySearch(int *a, int &x, int si, int li) {
+    if(li >= si) {
+        int mid = (si + li) / 2;
+        if(a[mid] == x)
+            return mid;
+        if(a[mid] > x)
+            return binarySearch(a, x, si, mid - 1);
+        if(a[mid] < x)
+            return binarySearch(a, x, mid + 1, li);
+    }
+    return -1;
+}
+ 
+int main()
+{
+    cout<<"\nPiyush Agrahari\t\t21BCS5596\n\n";
+    int n;
+    cout<<"Enter size of the array: ";
+    cin>>n;
+    int a[100];
+    cout<<"Enter the array: ";
+    for(int i = 0; i < n; i++)
+        cin>>a[i];
+    int x;
+    cout<<"Enter the element to be searched: ";
+    cin>>x;
+    int c;
+    cout<<"Select method for searching\n1. Linear Search\n2. Binary Search\nEnter (1 or 2): ";
+    cin>>c;
+    switch(c) {
+        case 1: {
+            int s = linearSearch(a, n, x);
+            if(s == -1)
+                cout<<"Element not found\n";
+            else
+                cout<<"\nUsing Linear Search\nThe element is at "<<s<<" index in the given array\n";
+                break;
+        }
+ 
+        case 2: {
+            sort(a, a + n);
+            int s = binarySearch(a, x, 0, n - 1);
+            if(s == -1)
+                cout<<"Element not found\n";
+            else
+                cout<<"\nUsing Binary Search\nThe element is at "<<s<<" index in the given array\n";
+                break;
+        }
+    }
+    return 0;
+}
+
