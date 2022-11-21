@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+void mergeArray(int *a, int &si, int &li, int &mid) {
+    int * b = new int [li - si + 1];
+    int i = si;
+    int j = mid + 1;
+    int k = 0;
+    while(i <= mid && j <= li){
+        if(a[i] <= a[j])
+            b[k++] = a[i++];
+        else
+            b[k++] = a[j++];
+    }
+    while(i <= mid)
+        b[k++] = a[i++];
+    while(j <= li)
+        b[k++] = a[j++];
+    for (int x = 0; x < k; x++) {
+        a[si++] = b[x];
+    }
+    delete [] b;
+}
+ 
+void mergeSort(int *a, int si, int li) {
+    if(si >= li)
+        return;
+    int mid = (si + li) / 2;
+    mergeSort(a, si, mid);
+    mergeSort(a, mid + 1, li);
+    mergeArray(a, si, li, mid);
+}
+ 
+int main()
+{
+    cout<<"\nPiyush Agrahari\t\t21BCS5596\n\n";
+    int a[100], n;
+    cout<<"Enter size of the array: ";
+    cin>>n;
+    cout<<"Enter your array:\n";
+    for (int i = 0; i < n; i++) {
+        cin>>a[i];
+    }
+    mergeSort(a, 0, n - 1);
+    cout<<"Sorted array is:\n";
+    for (int i = 0; i < n; i++) {
+       cout<<a[i]<<"\t";
+    }
+    cout<<endl;
+    return 0;
+}
+ 
+
