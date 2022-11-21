@@ -1,0 +1,125 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+void Insert(int *a, int &n, int &x, int &pos) {
+    if(pos == n - 1) {
+        n++;
+        a[n - 1] = x;
+    }
+    else {
+        for(int i = n - 1; i >= pos - 1; i--)
+            a[i + 1] = a[i];
+        a[pos - 1] = x;
+        n++;
+    }
+}
+ 
+void Print(int *a, int &n) {
+    for(int i = 0; i < n; i++)
+        cout<<a[i]<<"\t";
+    cout<<endl;
+}
+ 
+bool Delete_element(int *a, int &n, int &x, int &e) {
+    if(x == 1) {
+        for(int i = 0; i < n; i++) {
+            if(a[i] == e)
+                a[i] = a[i + 1];
+        }
+        n--;
+        return true;
+    }
+    else if(x == 2) {
+        if(e > n)
+            return false;
+        else {
+            for(int i = e; i < n; i++)
+                a[i] = a[i + 1];
+            n--;
+            return true;   
+        }
+    }
+    return false;
+}
+ 
+int Search(int *a, int &n, int &x) {
+    for(int i = 0; i < n; i++) {
+        if(a[i] == x)
+            return i;
+    }
+    return -1;
+}
+ 
+int main()
+{
+    cout<<"Piyush Agrahari\t\t21BCS5596\n\n";
+    int n;
+    cout<<"Enter size of the array: ";
+    cin>>n;
+    int a[100];
+    cout<<"Enter the array: ";
+    for(int i = 0; i < n; i++)
+        cin>>a[i];
+    int c;
+    cout<<"\n1. Insert a new element\n2. Delete an element\n3. To find the location of a element\n4. To display the elements of the array\nEnter your choice: ";
+    cin>>c;
+    switch(c) {
+        case 1: {
+            int x, pos, t;
+            cout<<"Enter your choice for insertion\n1. At the end\n2. At a certain position\nEnter (1 or 2): ";
+            cin>>t;
+            cout<<"Enter element to be inserted: ";
+            cin>>x;
+            if(t == 1)
+                pos = n - 1;
+            else if(t == 2) {
+                cout<<"Enter position: ";
+                cin>>pos;
+            }
+            Insert(a, n, x, pos);
+            cout<<"Insertion successful\nThe new array is:\n";
+            Print(a, n);
+            break;
+        }
+        
+        case 2: {
+            int x;
+            cout<<"Enter your choice for deletion\n1. By value\n2. By position\nEnter (1 or 2): ";
+            cin>>x;
+            int e;
+            cout<<"Enter element/position to be deleted: ";
+            cin>>e;
+            bool d = Delete_element(a, n, x, e);
+            if(d == false)
+                cout<<"Element not found\n";
+            else {
+                cout<<"Deletion successful\nThe new array is:\n";
+                Print(a, n); 
+            }
+            break;
+        }
+        
+        case 3: {
+            int x;
+            cout<<"Enter the element to be searched: ";
+            cin>>x;
+            int s = Search(a, n, x);
+            if(s == -1)
+                cout<<"Element not found\n";
+            else {
+                cout<<"The element is at "<<s<<" index in the given array\nThe new array is:\n";
+                Print(a, n);
+            }
+            break;
+        }
+        
+        case 4: {
+            cout<<"The array elements are as follows:\n";
+            Print(a, n);
+            break;
+        }
+    }
+    return 0;
+}
+ 
+
