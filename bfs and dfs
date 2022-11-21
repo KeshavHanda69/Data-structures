@@ -1,0 +1,108 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Unweighted_Graph
+{
+ public:
+ unordered_map<int,list<int>>adj;
+ void push(int u,int v,bool dir)
+ {
+ adj[u].push_back(v);
+ if(dir == 0 )
+ {
+ adj[v].push_back(u);
+ }
+ }
+ 
+ void show()
+ {
+ for(auto i:adj)
+ {
+ cout<<i.first<<"-> ";
+ for(auto j:i.second)
+ {
+ cout<<j<<", ";
+ }
+ }
+ }
+ 
+ void bfs(vector<int>&ans,unordered_map<int,bool>&visited,int node)
+ {
+ queue<int>q;
+ q.push(node);
+ visited[node]=1;
+ while(!q.empty())
+ {
+ int frontNode=q.front();
+ q.pop();
+ ans.push_back(frontNode);
+ for(auto i:adj[frontNode])
+ {
+ if(!visited[i])
+ {
+ q.push(i);
+ visited[i]=1;
+ }
+ }
+ }
+ }
+ vector<int> bfsOfGraph() 
+ {
+ vector<int>ans;
+ unordered_map<int,bool>visited;
+ int i=0;
+ if(!visited[i])
+ {
+ bfs(ans,visited,i);
+ }
+ for(int i=0;i<ans.size();i++)
+ {
+ cout<<ans[i]<<" ";
+ }
+ return ans;
+ }
+ void DFS(int src,unordered_map<int,bool>&visited,vector<int>&ans)
+ {
+ visited[src]=true;
+ ans.push_back(src);
+ for(auto i:adj[src])
+ {
+ if(!visited[i])
+ {
+ DFS(i,visited,ans);
+ }
+ }
+ }
+ vector<int> dfsOfGraph() {
+ unordered_map<int,bool>visited;
+ vector<int>ans;
+ for(int i=0;i<3;i++)
+ {
+ if(!visited[i])
+ {
+ DFS(i,visited,ans);
+ }
+ }
+ for(int i=0;i<ans.size();i++)
+ {
+ cout<<ans[i]<<" ";
+ }
+ cout<<endl;
+ return ans;
+ }
+};
+int main()
+{
+ Unweighted_Graph g;
+ g.push(0,1,0);
+ g.push(1,2,0);
+ g.push(1,3,0); 
+ cout<<"Printing the BFS of the graph"<<endl;
+ g.bfsOfGraph();
+ cout<<"\n Printing the DFS of the graph "<<endl;
+ g.dfsOfGraph();
+ 
+  cout<<"\n\nShashank kumar Gupta\t\t21BCS8963\n";
+ return 0;
+}
+
+
